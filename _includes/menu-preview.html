@@ -3,7 +3,7 @@
 <header id="site-header" class="menu-preview-header">
   <a href="{% if is_spanish %}/es/inicio-menu/{% else %}/en/home-menu/{% endif %}" class="site-title" aria-label="{% if is_spanish %}Ir al inicio de la prueba{% else %}Go to the preview home page{% endif %}">
     <img src="/img/GA_512x512.png" alt="GA" class="logo-ga">
-    <span>Olmo Gómez Aldaz<span class="preview-tagline">{% if is_spanish %}UN HOMBRE AL QUE NO PUDIERON BORRAR{% else %}A MAN THEY COULD NOT ERASE{% endif %}</span></span>
+    <span>Olmo Gómez Aldaz{% if site.url contains "pruebas.gomezaldaz.com" %}<span class="preview-environment"> · {% if is_spanish %}PRUEBAS{% else %}TEST{% endif %}</span>{% endif %}<span class="preview-tagline">{% if is_spanish %}UN HOMBRE AL QUE NO PUDIERON BORRAR{% else %}A MAN THEY COULD NOT ERASE{% endif %}</span></span>
   </a>
   <div class="preview-header-actions">
     <div class="preview-languages" aria-label="{% if is_spanish %}Idioma{% else %}Language{% endif %}">
@@ -42,5 +42,9 @@
 </header>
 
 {% if site.url contains "pruebas.gomezaldaz.com" %}
-<p class="menu-preview-notice"><strong class="preview-environment">{% if is_spanish %}PÁGINA DE PRUEBAS{% else %}TEST PAGE{% endif %}</strong>{% if page.url == "/es/inicio-menu/" %} · Menú alternativo · <a href="/">Comparar con la portada actual</a>{% elsif page.url == "/en/home-menu/" %} · Alternative menu · <a href="/en/">Compare with the current home page</a>{% endif %}</p>
+{% if page.url == "/es/inicio-menu/" %}
+<p class="menu-preview-notice">Menú alternativo · <a href="/">Comparar con la portada actual</a></p>
+{% elsif page.url == "/en/home-menu/" %}
+<p class="menu-preview-notice">Alternative menu · <a href="/en/">Compare with the current home page</a></p>
+{% endif %}
 {% endif %}
