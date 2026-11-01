@@ -122,8 +122,9 @@
 }
 @media (max-width: 768px) {
   #site-header.menu-preview-header { gap: 8px; padding-bottom: 8px; }
-  .menu-preview-header .site-title { gap: 10px; font-size: clamp(1.1rem, 5.5vw, 1.6rem); }
-  .menu-preview-header .logo-ga { height: 50px; }
+  .menu-preview-header .site-title { gap: 10px; font-size: 25.6px; }
+  .menu-preview-header .site-title > span { min-width: 0; }
+  .menu-preview-header .logo-ga { height: 50px; flex-shrink: 0; }
   .preview-header-actions > .preview-languages { display: none; }
   .preview-disclosure summary { width: 44px; gap: 0; padding: 0; border: 0; border-radius: 0; background: none; }
   .preview-toggle-label {
@@ -135,5 +136,5 @@
     clip-path: inset(50%);
     white-space: nowrap;
   }
-  .preview-tagline { font-size: .55rem; letter-spacing: 0; }
+  .preview-tagline { font-size: 12px; letter-spacing: 0; }
 }
