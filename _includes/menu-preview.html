@@ -10,7 +10,7 @@
       {% if is_spanish %}<strong lang="es">ES</strong> <span aria-hidden="true">|</span> <a href="{{ include.alt }}" lang="en" hreflang="en">EN</a>{% else %}<a href="{{ include.alt }}" lang="es" hreflang="es">ES</a> <span aria-hidden="true">|</span> <strong lang="en">EN</strong>{% endif %}
     </div>
     <details class="preview-disclosure">
-      <summary aria-controls="preview-navigation"><span>{% if is_spanish %}Menú{% else %}Menu{% endif %}</span><span class="preview-menu-icon" aria-hidden="true">☰</span></summary>
+      <summary aria-controls="preview-navigation"><span class="preview-toggle-label">{% if is_spanish %}Menú{% else %}Menu{% endif %}</span><span class="preview-menu-open" aria-hidden="true">☰</span><span class="preview-menu-close" aria-hidden="true">✕</span></summary>
       <nav id="preview-navigation" class="preview-navigation" aria-label="{% if is_spanish %}Navegación principal{% else %}Main navigation{% endif %}">
         {% if is_spanish %}
         <a href="/es/inicio-menu/" aria-current="page">Inicio</a>
@@ -33,6 +33,9 @@
         <a href="#colaboraciones-preview" title="Collaborations and public participation">Collaborations</a>
         <a href="/en/press/">Press</a>
         {% endif %}
+        <div class="preview-menu-languages" aria-label="{% if is_spanish %}Idioma{% else %}Language{% endif %}">
+      {% if is_spanish %}<strong lang="es">ES</strong> <span aria-hidden="true">|</span> <a href="{{ include.alt }}" lang="en" hreflang="en">EN</a>{% else %}<a href="{{ include.alt }}" lang="es" hreflang="es">ES</a> <span aria-hidden="true">|</span> <strong lang="en">EN</strong>{% endif %}
+    </div>
       </nav>
     </details>
   </div>
