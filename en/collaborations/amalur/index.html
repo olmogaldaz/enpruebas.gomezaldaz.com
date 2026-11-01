@@ -84,7 +84,6 @@ window.addEventListener('DOMContentLoaded', function () {
     hls.on(Hls.Events.ERROR, function (event, data) {
       if (data.fatal) showError();
     });
-    window.addEventListener('pagehide', function () { hls.destroy(); }, { once: true });
   } else {
     showError();
   }
