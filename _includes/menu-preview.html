@@ -1,0 +1,39 @@
+{% assign is_spanish = false %}
+{% if page.lang == "es" %}{% assign is_spanish = true %}{% endif %}
+<header id="site-header" class="menu-preview-header">
+  <a href="{% if is_spanish %}/es/inicio-menu/{% else %}/en/home-menu/{% endif %}" class="site-title" aria-label="{% if is_spanish %}Ir al inicio de la prueba{% else %}Go to the preview home page{% endif %}">
+    <img src="/img/GA_512x512.png" alt="GA" class="logo-ga">
+    <span>Olmo Gómez Aldaz<span class="preview-environment">PRUEBAS · {% if is_spanish %}MENÚ ALTERNATIVO{% else %}ALTERNATIVE MENU{% endif %}</span></span>
+  </a>
+  <div class="preview-header-actions">
+    <div class="preview-languages" aria-label="{% if is_spanish %}Idioma{% else %}Language{% endif %}">
+      {% if is_spanish %}<strong lang="es">ES</strong> <span aria-hidden="true">|</span> <a href="{{ include.alt }}" lang="en" hreflang="en">EN</a>{% else %}<a href="{{ include.alt }}" lang="es" hreflang="es">ES</a> <span aria-hidden="true">|</span> <strong lang="en">EN</strong>{% endif %}
+    </div>
+    <details class="preview-disclosure">
+      <summary aria-controls="preview-navigation"><span>{% if is_spanish %}Menú{% else %}Menu{% endif %}</span><span class="preview-menu-icon" aria-hidden="true">☰</span></summary>
+      <nav id="preview-navigation" class="preview-navigation" aria-label="{% if is_spanish %}Navegación principal{% else %}Main navigation{% endif %}">
+        {% if is_spanish %}
+        <a href="/es/inicio-menu/" aria-current="page">Inicio</a>
+        <a href="/es/autor/" title="Perfil de Olmo Gómez Aldaz">Olmo</a>
+        <a href="/es/historia/">Historia</a>
+        <a href="/es/demanda/">Demandas</a>
+        <a href="/es/sentencia/">Sentencias</a>
+        <a href="/es/memoria/" title="Memoria histórica">Memoria</a>
+        <a href="/es/obra/" title="Obra y publicaciones">Obra</a>
+        <a href="#colaboraciones-preview" title="Colaboraciones y participación pública">Colaboraciones</a>
+        <a href="/es/prensa/">Prensa</a>
+        {% else %}
+        <a href="/en/home-menu/" aria-current="page">Home</a>
+        <a href="/en/author/" title="About Olmo Gómez Aldaz">Olmo</a>
+        <a href="/en/story/">Story</a>
+        <a href="/en/claim/">Legal actions</a>
+        <a href="/en/sentence/">Judgments</a>
+        <a href="/en/memory/" title="Historical memory">Memory</a>
+        <a href="/en/work/" title="Work and publications">Work</a>
+        <a href="#colaboraciones-preview" title="Collaborations and public participation">Collaborations</a>
+        <a href="/en/press/">Press</a>
+        {% endif %}
+      </nav>
+    </details>
+  </div>
+</header>

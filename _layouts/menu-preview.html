@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{{ page.title }}</title>
+  <meta name="description" content="{{ page.description | escape }}">
+
+  {%- unless site.indexable and page.noindex != true %}
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  {%- endunless %}
+
+  {%- assign current_resource = nil %}
+  {%- assign alternate_resource = nil %}
+  {%- for pair in site.data.resources.html %}
+    {%- if page.lang == "es" and pair.es.url == page.url %}
+      {%- assign current_resource = pair.es %}
+      {%- assign alternate_resource = pair.en %}
+      {%- break %}
+    {%- elsif page.lang == "en" and pair.en.url == page.url %}
+      {%- assign current_resource = pair.en %}
+      {%- assign alternate_resource = pair.es %}
+      {%- break %}
+    {%- endif %}
+  {%- endfor %}
+  {%- assign resource_alt = page.preview_alt | default: alternate_resource.url %}
+  {%- assign resource_published = current_resource.published %}
+  {%- assign resource_modified = current_resource.modified %}
+
+  {%- assign public_url = site.public_url | default: site.url %}
+  {%- assign canonical_path = page.canonical | default: page.url %}
+  <link rel="canonical" href="{{ public_url }}{{ canonical_path }}">
+
+  <link rel="icon" href="/favicon.ico?v=2" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- CSS GLOBAL -->
+  <link rel="stylesheet" href="/css/style.css?v={{ site.time | date: '%s' }}">
+  <link rel="stylesheet" href="/css/mobile.css?v={{ site.time | date: '%s' }}">
+
+  <!-- CSS ESPECÍFICO DE PÁGINA -->
+  {%- if page.extra_css %}
+    {%- for stylesheet in page.extra_css %}
+  <link rel="stylesheet" href="{{ stylesheet }}">
+    {%- endfor %}
+  {%- endif %}
+
+  <!-- hreflang -->
+  {%- if resource_alt %}
+    {%- if page.lang == "es" %}
+    <link rel="alternate" hreflang="es" href="{{ public_url }}{{ page.url }}">
+    <link rel="alternate" hreflang="en" href="{{ public_url }}{{ resource_alt }}">
+    {%- else %}
+    <link rel="alternate" hreflang="es" href="{{ public_url }}{{ resource_alt }}">
+    <link rel="alternate" hreflang="en" href="{{ public_url }}{{ page.url }}">
+    {%- endif %}
+  {%- endif %}
+
+  <!-- schema -->
+
+  {%- assign schema_nodes = "" %}
+
+  {%- comment %} --- PERSON (siempre) --- {% endcomment %}
+
+  {%- assign person_url = "https://gomezaldaz.com/" %}
+
+  {%- if page.lang == "es" %}
+    {%- assign person_job = "Autor" %}
+    {%- assign person_desc = "Autor español y activista contra el identicidio en el contexto de la adopción, protagonista de un caso judicial pionero sobre restitución de identidad y doble filiación." %}
+    {%- assign footer_tagline = "Web personal y documental contra la cultura del silencio sobre las víctimas del tráfico de menores" %}
+  {%- else %}
+    {%- assign person_job = "Author" %}
+    {%- assign person_desc = "Spanish author and activist against identity erasure in the context of adoption, protagonist of a landmark judicial case on identity restitution and dual filiation." %}
+    {%- assign footer_tagline = "Personal and documentary website against the culture of silence imposed on victims of child trafficking" %}
+  {%- endif %}
+
+  {%- capture person_node %}
+  {
+    "@type": "Person",
+    "@id": "https://gomezaldaz.com/#person",
+    "name": "Olmo Gómez Aldaz",
+    "alternateName": [
+      "Olmo Gomez Aldaz",
+      "Santiago González Rueda",
+      "Santiago Gonzalez Rueda"
+    ],
+    "url": "{{ person_url }}",
+    "image": "https://gomezaldaz.com/img/olmo-autor.jpg",
+    "jobTitle": "{{ person_job }}",
+    "description": "{{ person_desc }}",
+    "sameAs": [
+      "https://orcid.org/0009-0003-3362-6763",
+      "https://scholar.google.com/citations?user=dQ7a7IAAAAAJ",
+      "https://zenodo.org/search?q=metadata.creators.person_or_org.name%3A%22G%C3%B3mez%20Aldaz%2C%20Olmo%22",
+      "https://independent.academia.edu/OlmoGomezAldaz",
+      "https://www.researchgate.net/profile/Olmo-Gomez-Aldaz",
+      "https://www.amazon.es/stores/author/B0G3HMBLDG",
+      "https://es.babelio.com/auteur/Olmo-Gomez-Aldaz/164329",
+      "https://www.goodreads.com/author/show/61495164.Olmo_G_mez_Aldaz",
+      "https://www.linkedin.com/in/olmogomezaldaz/",
+      "https://www.instagram.com/olmo.gomez.aldaz/",
+      "https://www.facebook.com/olmo.gomez.aldaz/"
+    ]
+  }
+  {%- endcapture %}
+
+  {%- assign schema_nodes = person_node %}
+
+  {%- comment %} --- WEBSITE (siempre) --- {% endcomment %}
+
+  {%- capture website_node %}
+  ,
+  {
+    "@type": "WebSite",
+    "@id": "https://gomezaldaz.com/#website",
+    "url": "https://gomezaldaz.com/",
+    "name": "Olmo Gómez Aldaz",
+    "inLanguage": ["es", "en"],
+    "about": {
+      "@id": "https://gomezaldaz.com/#person"
+    }
+  }
+  {%- endcapture %}
+
+  {%- assign schema_nodes = schema_nodes | append: website_node %}
+
+  {%- comment %} --- PAGE-SPECIFIC SCHEMA NODES --- {% endcomment %}
+
+  {%- if page.schema_nodes %}
+  {%- for schema_node in page.schema_nodes %}
+    {%- assign serialized_schema_node = schema_node | jsonify %}
+    {%- if page.schema_date_target and schema_node['@id'] == page.schema_date_target %}
+      {%- assign serialized_schema_node_size = serialized_schema_node | size | minus: 1 %}
+      {%- assign serialized_schema_node_without_closing_brace = serialized_schema_node | slice: 0, serialized_schema_node_size %}
+      {%- capture dated_schema_node %}{{ serialized_schema_node_without_closing_brace }}{% if resource_published %},"datePublished":{{ resource_published | jsonify }}{% endif %}{% if resource_modified %},"dateModified":{{ resource_modified | jsonify }}{% endif %}}{% endcapture %}
+      {%- assign serialized_schema_node = dated_schema_node | strip %}
+    {%- endif %}
+    {%- capture custom_node %}
+    ,
+    {{ serialized_schema_node }}
+    {%- endcapture %}
+
+    {%- assign schema_nodes = schema_nodes | append: custom_node %}
+  {%- endfor %}
+{%- endif %}
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {{ schema_nodes }}
+    ]
+  }
+  </script>
+
+</head>
+<body>
+  <!-- Google tag (gtag.js) -->
+  {% include google-analytics.html %}
+
+  <div class="wrap" id="top">
+    {% include menu-preview.html alt=resource_alt %}
+    {{ content }}
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-row">
+        <p class="footer-copy">
+          © 2026 · Olmo Gómez Aldaz · {{ footer_tagline }}
+        </p>
+        <p class="footer-lang">
+          {%- if page.lang == "es" %}
+            <strong class="active">ES</strong>
+            |
+            <a href="{{ resource_alt | default: '/en/' }}">EN</a>
+          {%- else %}
+            <a href="{{ resource_alt | default: '/' }}">ES</a>
+            |
+            <strong class="active">EN</strong>
+          {%- endif %}
+        </p>
+      </div>
+
+      {%- if page.lang == "es" %}
+      <nav class="footer-links" aria-label="Enlaces de utilidad">
+        <a href="/es/obra/libros/">Libros</a>
+        <a href="/es/prensa/notas-de-prensa/">Notas de prensa</a>
+        <a href="/es/contacto/">Contacto</a>
+      </nav>
+      {%- else %}
+      <nav class="footer-links" aria-label="Utility links">
+        <a href="/en/work/books/">Books</a>
+        <a href="/en/press/press-releases/">Press releases</a>
+        <a href="/en/contact/">Contact</a>
+      </nav>
+      {%- endif %}
+    </div>
+  </footer>
+
+  <script src="/js/menu-preview.js?v=20261101"></script>
+
+</body>
+</html>
