@@ -40,3 +40,7 @@
     </details>
   </div>
 </header>
+
+{% if site.url contains "pruebas.gomezaldaz.com" %}
+<p class="menu-preview-notice"><strong class="preview-environment">{% if is_spanish %}PÁGINA DE PRUEBAS{% else %}TEST PAGE{% endif %}</strong>{% if page.url == "/es/inicio-menu/" %} · Menú alternativo · <a href="/">Comparar con la portada actual</a>{% elsif page.url == "/en/home-menu/" %} · Alternative menu · <a href="/en/">Compare with the current home page</a>{% endif %}</p>
+{% endif %}

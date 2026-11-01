@@ -80,6 +80,20 @@ html:
     en: {url: "/en/work/maria-madre-association/", modified: "2026-10-11"}
     sitemap: false
 
+  # Páginas de pruebas: parejas bilingües excluidas del sitemap.
+  - es: {url: "/es/inicio-menu/", published: "2026-11-01", modified: "2026-11-01"}
+    en: {url: "/en/home-menu/", published: "2026-11-01", modified: "2026-11-01"}
+    sitemap: false
+  - es: {url: "/es/colaboraciones/", published: "2026-11-01", modified: "2026-11-01"}
+    en: {url: "/en/collaborations/", published: "2026-11-01", modified: "2026-11-01"}
+    sitemap: false
+  - es: {url: "/es/colaboraciones/fibgar/", published: "2026-11-01", modified: "2026-11-01"}
+    en: {url: "/en/collaborations/fibgar/", published: "2026-11-01", modified: "2026-11-01"}
+    sitemap: false
+  - es: {url: "/es/colaboraciones/amalur/", published: "2026-11-01", modified: "2026-11-01"}
+    en: {url: "/en/collaborations/amalur/", published: "2026-11-01", modified: "2026-11-01"}
+    sitemap: false
+
 pdf:
   - {url: "/docs/nota-prensa-queja-adoptados-bebes-robados-fibgar-octubre-2026.pdf", modified: "2026-10-26"}
   - {url: "/docs/resolucion-inscripcion-maria-micaela-aldaz-ilarregui-censo-victimas-2026.pdf", modified: "2026-09-27"}
@@ -105,3 +119,4 @@ pdf:
   - {url: "/docs/I-am-going-to-talk-about-resilience-v1.pdf"}
   - {url: "/docs/nota-prensa-reconocimiento-bebe-robado-julio-2026.pdf", modified: "2026-07-14"}
   - {url: "/docs/nota-prensa-ley-memoria-democratica-bebes-robados-agosto-2026.pdf", modified: "2026-08-04"}
+
