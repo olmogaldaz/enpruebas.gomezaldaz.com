@@ -4,7 +4,7 @@
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 16px;
-  padding: 12px 0 18px;
+  padding: 0 0 18px;
 }
 .menu-preview-header .site-title {
   min-width: 0;
