@@ -3,12 +3,11 @@
 <header id="site-header" class="menu-preview-header">
   <a href="{% if is_spanish %}/es/inicio-menu/{% else %}/en/home-menu/{% endif %}" class="site-title" aria-label="{% if is_spanish %}Ir al inicio de la prueba{% else %}Go to the preview home page{% endif %}">
     <img src="/img/GA_512x512.png" alt="GA" class="logo-ga">
-    <span>Olmo Gómez Aldaz<span class="preview-tagline"><span>{% if is_spanish %}Un hombre que no pudieron borrar{% else %}A man they could not erase{% endif %}</span><span class="preview-environment">· {% if is_spanish %}PRUEBAS{% else %}TEST SITE{% endif %}</span></span></span>
+    <span>Olmo Gómez Aldaz<span class="preview-tagline">{% if is_spanish %}UN HOMBRE AL QUE NO PUDIERON BORRAR{% else %}A MAN THEY COULD NOT ERASE{% endif %}</span></span>
   </a>
   <div class="preview-header-actions">
     <div class="preview-languages" aria-label="{% if is_spanish %}Idioma{% else %}Language{% endif %}">
-      <span class="preview-language-label">{% if is_spanish %}Idioma:{% else %}Language:{% endif %}</span>
-      {% if is_spanish %}<strong lang="es">ES</strong> <span aria-hidden="true">|</span> <a href="{{ include.alt }}" lang="en" hreflang="en" title="Cambiar a inglés">EN</a>{% else %}<a href="{{ include.alt }}" lang="es" hreflang="es" title="Switch to Spanish">ES</a> <span aria-hidden="true">|</span> <strong lang="en">EN</strong>{% endif %}
+      {% if is_spanish %}<strong lang="es">ES</strong> <span aria-hidden="true">·</span> <a href="{{ include.alt }}" lang="en" hreflang="en" title="Cambiar a inglés">EN</a>{% else %}<a href="{{ include.alt }}" lang="es" hreflang="es" title="Switch to Spanish">ES</a> <span aria-hidden="true">·</span> <strong lang="en">EN</strong>{% endif %}
     </div>
     <details class="preview-disclosure">
       <summary aria-controls="preview-navigation"><span class="preview-toggle-label">{% if is_spanish %}Menú{% else %}Menu{% endif %}</span><span class="preview-menu-open" aria-hidden="true">☰</span><span class="preview-menu-close" aria-hidden="true">✕</span></summary>
@@ -35,7 +34,7 @@
         <a href="/en/press/" title="Press and media coverage">Press</a>
         {% endif %}
         <div class="preview-menu-languages" aria-label="{% if is_spanish %}Idioma{% else %}Language{% endif %}">
-      {% if is_spanish %}<strong lang="es">ES</strong> <span aria-hidden="true">|</span> <a href="{{ include.alt }}" lang="en" hreflang="en" title="Cambiar a inglés">EN</a>{% else %}<a href="{{ include.alt }}" lang="es" hreflang="es" title="Switch to Spanish">ES</a> <span aria-hidden="true">|</span> <strong lang="en">EN</strong>{% endif %}
+      {% if is_spanish %}<strong lang="es">ES</strong> <span aria-hidden="true">·</span> <a href="{{ include.alt }}" lang="en" hreflang="en" title="Cambiar a inglés">EN</a>{% else %}<a href="{{ include.alt }}" lang="es" hreflang="es" title="Switch to Spanish">ES</a> <span aria-hidden="true">·</span> <strong lang="en">EN</strong>{% endif %}
     </div>
       </nav>
     </details>
