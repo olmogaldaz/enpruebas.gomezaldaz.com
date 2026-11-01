@@ -136,5 +136,5 @@
     clip-path: inset(50%);
     white-space: nowrap;
   }
-  .preview-tagline { font-size: 12px; letter-spacing: 0; }
+  .preview-tagline { font-size: 10px; letter-spacing: 0; }
 }
