@@ -7,34 +7,34 @@
   </a>
   <div class="preview-header-actions">
     <div class="preview-languages" aria-label="{% if is_spanish %}Idioma{% else %}Language{% endif %}">
-      {% if is_spanish %}<strong lang="es">ES</strong> <span aria-hidden="true">|</span> <a href="{{ include.alt }}" lang="en" hreflang="en">EN</a>{% else %}<a href="{{ include.alt }}" lang="es" hreflang="es">ES</a> <span aria-hidden="true">|</span> <strong lang="en">EN</strong>{% endif %}
+      {% if is_spanish %}<strong lang="es">ES</strong> <span aria-hidden="true">|</span> <a href="{{ include.alt }}" lang="en" hreflang="en" title="Cambiar a inglés">EN</a>{% else %}<a href="{{ include.alt }}" lang="es" hreflang="es" title="Switch to Spanish">ES</a> <span aria-hidden="true">|</span> <strong lang="en">EN</strong>{% endif %}
     </div>
     <details class="preview-disclosure">
       <summary aria-controls="preview-navigation"><span class="preview-toggle-label">{% if is_spanish %}Menú{% else %}Menu{% endif %}</span><span class="preview-menu-open" aria-hidden="true">☰</span><span class="preview-menu-close" aria-hidden="true">✕</span></summary>
       <nav id="preview-navigation" class="preview-navigation" aria-label="{% if is_spanish %}Navegación principal{% else %}Main navigation{% endif %}">
         {% if is_spanish %}
-        <a href="/es/inicio-menu/" aria-current="page">Inicio</a>
+        <a href="/es/inicio-menu/" aria-current="page" title="Página de inicio">Inicio</a>
         <a href="/es/autor/" title="Perfil de Olmo Gómez Aldaz">Olmo</a>
-        <a href="/es/historia/">Historia</a>
-        <a href="/es/demanda/">Demandas</a>
-        <a href="/es/sentencia/">Sentencias</a>
+        <a href="/es/historia/" title="Historia personal">Historia</a>
+        <a href="/es/demanda/" title="Demandas y reclamaciones">Demandas</a>
+        <a href="/es/sentencia/" title="Sentencias y resoluciones judiciales">Sentencias</a>
         <a href="/es/memoria/" title="Memoria histórica">Memoria</a>
         <a href="/es/obra/" title="Obra y publicaciones">Obra</a>
         <a href="#colaboraciones-preview" title="Colaboraciones y participación pública">Colaboraciones</a>
-        <a href="/es/prensa/">Prensa</a>
+        <a href="/es/prensa/" title="Prensa y apariciones en medios">Prensa</a>
         {% else %}
-        <a href="/en/home-menu/" aria-current="page">Home</a>
-        <a href="/en/author/" title="About Olmo Gómez Aldaz">Olmo</a>
-        <a href="/en/story/">Story</a>
-        <a href="/en/claim/">Legal actions</a>
-        <a href="/en/sentence/">Judgments</a>
+        <a href="/en/home-menu/" aria-current="page" title="Home page">Home</a>
+        <a href="/en/author/" title="Profile of Olmo Gómez Aldaz">Olmo</a>
+        <a href="/en/story/" title="Personal history">Story</a>
+        <a href="/en/claim/" title="Legal actions and complaints">Legal actions</a>
+        <a href="/en/sentence/" title="Judgments and court decisions">Judgments</a>
         <a href="/en/memory/" title="Historical memory">Memory</a>
         <a href="/en/work/" title="Work and publications">Work</a>
         <a href="#colaboraciones-preview" title="Collaborations and public participation">Collaborations</a>
-        <a href="/en/press/">Press</a>
+        <a href="/en/press/" title="Press and media coverage">Press</a>
         {% endif %}
         <div class="preview-menu-languages" aria-label="{% if is_spanish %}Idioma{% else %}Language{% endif %}">
-      {% if is_spanish %}<strong lang="es">ES</strong> <span aria-hidden="true">|</span> <a href="{{ include.alt }}" lang="en" hreflang="en">EN</a>{% else %}<a href="{{ include.alt }}" lang="es" hreflang="es">ES</a> <span aria-hidden="true">|</span> <strong lang="en">EN</strong>{% endif %}
+      {% if is_spanish %}<strong lang="es">ES</strong> <span aria-hidden="true">|</span> <a href="{{ include.alt }}" lang="en" hreflang="en" title="Cambiar a inglés">EN</a>{% else %}<a href="{{ include.alt }}" lang="es" hreflang="es" title="Switch to Spanish">ES</a> <span aria-hidden="true">|</span> <strong lang="en">EN</strong>{% endif %}
     </div>
       </nav>
     </details>
