@@ -109,7 +109,7 @@ Por estas razones, solicito que el Defensor del Pueblo examine las cuestiones y 
     for (const opcion of ["espana", "extranjero"]) {
       const grupo = document.getElementById("domicilio-" + opcion);
       grupo.hidden = domicilio.value !== opcion;
-      for (const campo of grupo.querySelectorAll("input")) campo.disabled = grupo.hidden;
+      for (const campo of grupo.querySelectorAll("input, select")) campo.disabled = grupo.hidden;
     }
   }
 
