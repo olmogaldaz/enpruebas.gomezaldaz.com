@@ -13,7 +13,7 @@
 
   {%- assign current_resource = nil %}
   {%- assign alternate_resource = nil %}
-  {%- assign html_resources = site.data.resources.html | concat: site.data.resources.legacy_html %}
+  {%- assign html_resources = site.data.resources.html | concat: site.data.resources.legacy_html | concat: site.data.resources.noindex_html %}
   {%- for pair in html_resources %}
     {%- if page.lang == "es" and pair.es.url == page.url %}
       {%- assign current_resource = pair.es %}
@@ -209,3 +209,4 @@
 
 </body>
 </html>
+

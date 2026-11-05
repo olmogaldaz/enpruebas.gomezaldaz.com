@@ -557,3 +557,13 @@ Los documentos anonimizados deben contener una eliminación real de los datos pe
 - Expediente 26037767 como referencia principal, con explicación del número inicial 26097224.
 - Actualización coordinada de Word, PDF, portadas, páginas ES/EN, fichas editoriales de prensa, Schema y catálogo del sitemap.
 - Enlaces de la guía adaptados al entorno de pruebas; traslado a producción pendiente de aprobación.
+
+
+### Formulario de adhesión por correo — pruebas, 05/11/2026
+
+- Español: `/es/queja-adoptados-bebes-robados/adhesiones-por-correo/`.
+- Inglés: `/en/complaint-adoptees-stolen-babies/join-by-email/`.
+- Ambas páginas de la queja ofrecen envío automático y presentación directa.
+- La versión inglesa traduce las etiquetas, el texto de adhesión, la identificación, los mensajes y los errores del servicio. Mantiene los nombres y valores de los campos requeridos por el PDF oficial; el formulario oficial y la queja original siguen en español.
+- Ambas versiones del formulario conservan `noindex: true`. Sus rutas y fechas están en `noindex_html` de `_data/resources.yml`, que el layout consulta para los enlaces de idioma y que el sitemap no enumera.
+- El servicio compartido de Vercel y su destinatario de pruebas no se modifican en esta traducción. Antes de producción hay que ajustar el origen permitido, la URL del PDF y el destinatario, retirar los avisos de pruebas y comprobar el recorrido.
