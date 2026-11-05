@@ -14,7 +14,7 @@ extra_css:
     <p class="complaint-lead">Rellena el formulario para preparar tu adhesión. El envío incluye el formulario oficial, la queja original y tu texto de adhesión.</p>
   </header>
   <p>Antes de adherirte, puedes <a href="/docs/queja-adhesion-adoptados-bebes-robados.pdf" target="_blank" rel="noopener">leer la queja original (PDF)</a>, que se adjuntará al correo.</p>
-  <form id="formulario-adhesion" data-endpoint="https://adhesionesmail.vercel.app/api/adhesiones_mail" method="post">
+  <form id="formulario-adhesion" data-endpoint="https://adhesionesmail.vercel.app/api/{% if site.indexable %}adhesiones_mail_produccion{% else %}adhesiones_mail{% endif %}" method="post">
     <p>Los campos marcados con * son obligatorios.</p>
     <fieldset>
       <legend>Datos personales</legend>

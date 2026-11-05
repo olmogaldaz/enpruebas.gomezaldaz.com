@@ -15,7 +15,7 @@ extra_css:
   </header>
   <p>Before joining, you can <a href="/docs/queja-adhesion-adoptados-bebes-robados.pdf" target="_blank" rel="noopener">read the original complaint (PDF, in Spanish)</a>, which will be attached to the email.</p>
   <p class="resource-note">The official form and original complaint are in Spanish. Your statement of support below is in English and can be edited.</p>
-  <form id="formulario-adhesion" data-endpoint="https://adhesionesmail.vercel.app/api/adhesiones_mail" method="post">
+  <form id="formulario-adhesion" data-endpoint="https://adhesionesmail.vercel.app/api/{% if site.indexable %}adhesiones_mail_produccion{% else %}adhesiones_mail{% endif %}" method="post">
     <p>Fields marked with * are required.</p>
     <fieldset>
       <legend>Personal details</legend>
