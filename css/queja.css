@@ -406,3 +406,13 @@
   .adhesion-options-grid{grid-template-columns:1fr;}
   .adhesion-option{padding:22px;}
 }
+
+/* Enlaces de texto de la página española de adhesión. */
+.complaint-adhesion-page a:not(.cta){
+  color:var(--campaign);
+  text-decoration:none;
+}
+.complaint-adhesion-page a:not(.cta):hover,
+.complaint-adhesion-page a:not(.cta):focus-visible{
+  text-decoration:underline;
+}
