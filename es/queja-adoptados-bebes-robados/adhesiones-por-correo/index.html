@@ -96,9 +96,11 @@ Por estas razones, solicito que el Defensor del Pueblo examine las cuestiones y 
     </div>
     <button class="cta cta-campaign" type="submit" disabled>Enviar adhesión</button>
     <p id="resultado-adhesion" role="status" aria-live="polite"></p>
-    <p><a class="cta" href="/">Volver al inicio</a></p>
     <noscript><p>Activa JavaScript para utilizar el formulario.</p></noscript>
   </form>
+  <div class="adhesion-volver-inicio">
+    <a class="cta" href="/">Pulsa aquí cuando haya terminado el envío del formulario para volver al inicio de esta web</a>
+  </div>
 </main>
 <style>
   .adhesiones-correo fieldset { margin: 1.4rem 0; padding: 1rem; border: 1px solid var(--campaign-line); border-radius: 12px; min-width: 0; }
@@ -119,6 +121,8 @@ Por estas razones, solicito que el Defensor del Pueblo examine las cuestiones y 
   .adhesiones-correo select[name="domicilio"] { margin-bottom: .85rem; }
   .adhesiones-correo .adhesion-confirmacion { margin-top: .85rem; font-weight: normal; }
   .adhesiones-correo button:disabled { opacity: .65; cursor: default; }
+  .adhesiones-correo .adhesion-volver-inicio { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+  .adhesiones-correo .adhesion-volver-inicio .cta { display: block; box-sizing: border-box; width: 100%; min-width: 0; white-space: normal; text-align: center; }
 </style>
 <script>
 const limitesAdhesion = {
