@@ -25,8 +25,15 @@ extra_css:
         <label>Nombre *<input name="nombre" type="text" maxlength="100" required></label>
         <label>Primer apellido *<input name="apellido1" type="text" maxlength="100" required></label>
         <label>Segundo apellido<input name="apellido2" type="text" maxlength="100"></label>
-        <label>Tipo de documento *<select name="tipoDocumento" required><option value="">Selecciona</option><option value="NIF">NIF</option><option value="NIE">NIE</option><option value="Pasaporte">Pasaporte</option></select></label>
+        <label>Tipo de documento *<select name="tipoDocumento" required><option value="">Selecciona</option><option value="NIF">NIF</option><option value="NIE">NIE</option><option value="Pasaporte">Pasaporte</option><option value="CIF">CIF</option></select></label>
         <label>Número de documento *<input name="documento" type="text" maxlength="40" required></label>
+      </div>
+    </fieldset>
+    <fieldset id="datos-entidad" hidden>
+      <legend>Entidad representada</legend>
+      <div class="adhesion-grid">
+        <label>Entidad *<input name="entidad" type="text" maxlength="60" required disabled></label>
+        <label>Cargo *<input name="cargo" type="text" maxlength="200" required disabled></label>
       </div>
     </fieldset>
     <fieldset>
@@ -94,6 +101,7 @@ Por estas razones, solicito que el Defensor del Pueblo examine las cuestiones y 
 </main>
 <style>
   .adhesiones-correo fieldset { margin: 1.4rem 0; padding: 1rem; border: 1px solid var(--campaign-line); border-radius: 12px; min-width: 0; }
+  .adhesiones-correo fieldset[hidden] { display: none; }
   .adhesiones-correo legend { padding: 0 .4rem; color: var(--campaign-dark); font-weight: 700; }
   .adhesion-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); gap: .85rem 1rem; }
   .adhesion-grid[hidden] { display: none; }
@@ -113,7 +121,7 @@ Por estas razones, solicito que el Defensor del Pueblo examine las cuestiones y 
 </style>
 <script>
 const limitesAdhesion = {
-  tratamiento: 10, nombre: 100, apellido1: 100, apellido2: 100, tipoDocumento: 20,
+  entidad: 60, cargo: 200, tratamiento: 10, nombre: 100, apellido1: 100, apellido2: 100, tipoDocumento: 20,
   documento: 40, domicilio: 12, codigoPostal: 5, provincia: 50, poblacion: 80,
   tipoVia: 40, via: 100, numero: 7, bloque: 10, piso: 10, puerta: 10, escalera: 3,
   pais: 100, direccion: 100, direccion2: 150, direccion3: 150,
@@ -124,6 +132,8 @@ function validarEntradaAdhesion(entrada) {
   const valores = {};
   const errores = {};
   const obligatorios = new Set(["tratamiento","nombre","apellido1","tipoDocumento","documento","domicilio","correo","confirmarCorreo","texto"]);
+  const esCif = entrada?.tipoDocumento === "CIF";
+  if (esCif) { obligatorios.add("entidad"); obligatorios.add("cargo"); }
   const espana = entrada?.domicilio === "espana";
   const extranjero = entrada?.domicilio === "extranjero";
   const nacionales = ["codigoPostal","provincia","poblacion","tipoVia","via","numero","bloque","piso","puerta","escalera"];
@@ -131,6 +141,7 @@ function validarEntradaAdhesion(entrada) {
   if (espana) for (const n of nacionales.slice(0,6)) obligatorios.add(n);
   if (extranjero) for (const n of ["pais","direccion"]) obligatorios.add(n);
   for (const [nombre, maximo] of Object.entries(limitesAdhesion)) {
+    if (!esCif && ["entidad","cargo"].includes(nombre)) continue;
     if ((!espana && nacionales.includes(nombre)) || (!extranjero && exteriores.includes(nombre))) continue;
     const original = entrada?.[nombre];
     if (original != null && typeof original !== "string") {
@@ -145,14 +156,29 @@ function validarEntradaAdhesion(entrada) {
       errores[nombre] = "Hay un carácter que no admite la fuente del PDF. Revisa símbolos o emoticonos.";
     } else if (nombre !== "texto" && /[\r\n\t]/.test(valor)) errores[nombre] = "Introduce este dato en una sola línea.";
   }
-  const opciones = {tratamiento:["Sr","Sra"], tipoDocumento:["NIF","NIE","Pasaporte"], domicilio:["espana","extranjero"]};
+  const opciones = {tratamiento:["Sr","Sra"], tipoDocumento:["NIF","NIE","Pasaporte","CIF"], domicilio:["espana","extranjero"]};
   for (const [nombre, lista] of Object.entries(opciones)) {
     if (valores[nombre] && !lista.includes(valores[nombre])) errores[nombre] = "Selecciona una opción válida.";
   }
   const tipo = valores.tipoDocumento;
   if (valores.documento && !errores.documento) {
     let documento = valores.documento;
-    if (tipo === "NIF" || tipo === "NIE") {
+    if (tipo === "CIF") {
+      documento = documento.replace(/[\s-]/g, "").toUpperCase();
+      valores.documento = documento;
+      if (!/^[ABCDEFGHJNPQRSUVW]\d{7}[0-9A-J]$/.test(documento)) {
+        errores.documento = "Introduce un CIF con una letra inicial, siete cifras y un carácter de control.";
+      } else {
+        const digitos = documento.slice(1,8).split("").map(Number);
+        const suma = digitos.reduce((total, n, i) => total + (i % 2 ? n : Math.floor(n * 2 / 10) + n * 2 % 10), 0);
+        const control = (10 - suma % 10) % 10;
+        const final = documento.slice(-1);
+        const correcto = /^[ABEH]/.test(documento) ? final === String(control)
+          : /^[NPQRSW]/.test(documento) ? final === "JABCDEFGHI"[control]
+          : final === String(control) || final === "JABCDEFGHI"[control];
+        if (!correcto) errores.documento = "El carácter de control del CIF no es correcto. Revisa el número.";
+      }
+    } else if (tipo === "NIF" || tipo === "NIE") {
       documento = documento.replace(/[\s-]/g,"").toUpperCase();
       valores.documento = documento;
       const formato = tipo === "NIF" ? /^\d{8}[A-Z]$/ : /^[XYZ]\d{7}[A-Z]$/;
@@ -211,13 +237,20 @@ function validarEntradaAdhesion(entrada) {
   function actualizarPresentacion() {
     const campos = formulario.elements;
     const nombre = [campos.nombre.value, campos.apellido1.value, campos.apellido2.value].map(v => v.trim()).filter(Boolean).join(" ");
-    document.getElementById("identificacion-adhesion").textContent =
+    const esCif = campos.tipoDocumento.value === "CIF";
+    const entidad = document.getElementById("datos-entidad");
+    entidad.hidden = !esCif;
+    for (const campo of entidad.querySelectorAll("input")) campo.disabled = !esCif;
+    document.getElementById("identificacion-adhesion").textContent = esCif
+      ? "Yo, " + (nombre || "[nombre y apellidos]") + ", en calidad de " + (campos.cargo.value.trim() || "[cargo]") + " de " + (campos.entidad.value.trim() || "[entidad]") + ", con CIF " + (campos.documento.value.trim() || "[número]") + ","
+      :
       "Yo, " + (nombre || "[nombre y apellidos]") + ", con " +
       (campos.tipoDocumento.value || "[tipo de documento]") + " " +
       (campos.documento.value.trim() || "[número]") + ",";
     if (!motivoEditado) {
-      campos.texto.value = campos.texto.value.replace(/^comparezco como ciudadan[oa] interesad[oa]/,
-        campos.tratamiento.value === "Sra" ? "comparezco como ciudadana interesada" : "comparezco como ciudadano interesado");
+      campos.texto.value = campos.texto.value.replace(/^comparezco (?:como ciudadan[oa] interesad[oa](?: en la regulación de la adopción)?|en representación de dicha entidad)/,
+        esCif ? "comparezco en representación de dicha entidad"
+        : campos.tratamiento.value === "Sra" ? "comparezco como ciudadana interesada en la regulación de la adopción" : "comparezco como ciudadano interesado en la regulación de la adopción");
     }
     contarTexto();
   }
