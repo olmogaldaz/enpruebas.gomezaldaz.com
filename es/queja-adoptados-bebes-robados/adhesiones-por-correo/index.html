@@ -15,6 +15,7 @@ extra_css:
     <p class="complaint-lead">Rellena el formulario para preparar tu adhesión. El envío incluye el formulario oficial, la queja original y tu texto de adhesión.</p>
     <p class="resource-note"><strong>En pruebas.</strong> Usa únicamente datos ficticios y un buzón autorizado para la comprobación.</p>
   </header>
+  <p>Antes de adherirte, puedes <a href="/docs/queja-adhesion-adoptados-bebes-robados.pdf" target="_blank" rel="noopener">leer la queja original (PDF)</a>, que se adjuntará al correo.</p>
   <form id="formulario-adhesion" data-endpoint="https://adhesionesmail.vercel.app/api/adhesiones_mail" method="post">
     <p>Los campos marcados con * son obligatorios.</p>
     <fieldset>
@@ -60,12 +61,13 @@ extra_css:
         <label>Teléfono fijo<input name="telefonoFijo" type="tel" maxlength="20"></label>
         <label>Fax<input name="fax" type="tel" maxlength="20"></label>
       </div>
-      <p>Recibirás en el correo electrónico que has indicado una copia del mensaje de adhesión destinado al Defensor del Pueblo (<a href="mailto:registro@defensordelpueblo.es">registro@defensordelpueblo.es</a>), con los tres documentos adjuntos.</p>
+      <p>Recibirás en el correo electrónico que has indicado una copia del mensaje que se enviará al Defensor del Pueblo, a registro@defensordelpueblo.es, con los tres documentos adjuntos.</p>
     </fieldset>
     <fieldset>
       <legend>Texto de adhesión</legend>
       <p>Revisa y adapta el texto de adhesión a tu situación. Se incorporará íntegro a un PDF adjunto.</p>
-      <label>Motivo de la adhesión *<textarea name="texto" rows="12" maxlength="50000" required>Comparezco como ciudadano/a interesado/a en la regulación de la adopción y me adhiero a la queja del expediente n.º 26037767. La fundamentación completa, las tres quejas planteadas y sus solicitudes se recogen en el documento adjunto, cuyo contenido respaldo.
+      <p id="identificacion-adhesion" aria-live="polite">Yo, [nombre y apellidos], con [tipo de documento] [número],</p>
+      <label>Motivo de la adhesión *<textarea name="texto" rows="12" maxlength="50000" required>comparezco como ciudadano interesado en la regulación de la adopción y me adhiero a la queja del expediente n.º 26037767. La fundamentación completa, las tres quejas planteadas y sus solicitudes se recogen en el documento adjunto, cuyo contenido respaldo.
 
 La legislación española ha regulado ampliamente la adopción durante la minoría de edad, pero deja insuficientemente resuelta la posición jurídica de la persona adoptada adulta. La adopción puede haber extinguido sus vínculos jurídicos de origen, sustituido sus apellidos y determinado su identidad registral sin que pudiera decidirlo, manteniéndose después esos efectos de forma esencialmente permanente.
 
@@ -82,10 +84,10 @@ Por estas razones, solicito que el Defensor del Pueblo examine las cuestiones y 
       <label class="adhesion-confirmacion"><input type="checkbox" name="veracidad" required> Declaro que los datos consignados son veraces y se corresponden con mi identidad y señas de contacto.</label>
     </fieldset>
     <div class="adhesion-privacidad">
-      <p>Este formulario utiliza tus datos exclusivamente para cumplimentar los documentos y preparar el envío de tu adhesión al Defensor del Pueblo (<a href="mailto:registro@defensordelpueblo.es">registro@defensordelpueblo.es</a>), con copia al correo electrónico que has indicado. Este portal no mantiene un archivo propio de tus datos y documentos ni los utiliza para otros fines.</p>
-      <p>El proceso utiliza los servicios de <a href="https://vercel.com/legal/dpa" target="_blank" rel="noopener">Vercel</a> y <a href="https://resend.com/security/gdpr/" target="_blank" rel="noopener">Resend</a>; los enlaces explican cómo tratan y conservan los datos. En el envío definitivo, el mensaje y los documentos adjuntos quedarán en el correo del Defensor del Pueblo y en el correo electrónico que has indicado para recibir tu copia.</p>
-      <p><strong>En esta página de pruebas no se envían correos al Defensor del Pueblo:</strong> se utilizan únicamente los buzones autorizados de comprobación.</p>
+      <p>Tus datos se utilizarán únicamente para cumplimentar los documentos y efectuar ese envío. Este portal no los utiliza para otros fines ni mantiene un archivo propio de las adhesiones.</p>
+      <p>El proceso utiliza los servicios de <a href="https://vercel.com/legal/dpa" target="_blank" rel="noopener">Vercel</a> y <a href="https://resend.com/security/gdpr/" target="_blank" rel="noopener">Resend</a>; los enlaces explican cómo tratan y conservan los datos.</p>
       <p><a href="https://www.defensordelpueblo.es/wp-content/uploads/queja/FormularioQuejasOffline.pdf#page=3" target="_blank" rel="noopener">Consulta la cláusula de protección de datos del Defensor del Pueblo (página 3 del PDF oficial)</a>.</p>
+      <p><strong>En pruebas:</strong> los mensajes se envían a los buzones de comprobación autorizados, no al Defensor del Pueblo.</p>
     </div>
     <button class="cta cta-campaign" type="submit" disabled>Enviar adhesión</button>
     <p id="resultado-adhesion" role="status" aria-live="polite"></p>
@@ -103,6 +105,9 @@ Por estas razones, solicito que el Defensor del Pueblo examine las cuestiones y 
   .adhesion-error { display: block; color: #a32121; font-size: .92rem; font-weight: normal; margin-top: .3rem; }
   .adhesion-error[hidden] { display: none; }
   .adhesiones-correo [aria-invalid="true"] { border-color: #a32121; }
+  .adhesiones-correo a:not(.cta), .adhesiones-correo a:not(.cta):hover { text-decoration: none; }
+  .adhesiones-correo a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+  #identificacion-adhesion { margin: 1rem 0 .6rem; }
   .adhesion-privacidad { margin: 1rem 0; font-size: .95rem; }
   .adhesiones-correo select[name="domicilio"] { margin-bottom: .85rem; }
   .adhesiones-correo .adhesion-confirmacion { margin-top: .85rem; font-weight: normal; }
@@ -204,6 +209,20 @@ function validarEntradaAdhesion(entrada) {
   const contador = document.getElementById("contador-texto");
   const domicilio = formulario.elements.domicilio;
   let solicitudAnterior = "", idAdhesion = "", revisado = false;
+  let motivoEditado = false;
+  function actualizarPresentacion() {
+    const campos = formulario.elements;
+    const nombre = [campos.nombre.value, campos.apellido1.value, campos.apellido2.value].map(v => v.trim()).filter(Boolean).join(" ");
+    document.getElementById("identificacion-adhesion").textContent =
+      "Yo, " + (nombre || "[nombre y apellidos]") + ", con " +
+      (campos.tipoDocumento.value || "[tipo de documento]") + " " +
+      (campos.documento.value.trim() || "[número]") + ",";
+    if (!motivoEditado) {
+      campos.texto.value = campos.texto.value.replace(/^comparezco como ciudadan[oa] interesad[oa]/,
+        campos.tratamiento.value === "Sra" ? "comparezco como ciudadana interesada" : "comparezco como ciudadano interesado");
+    }
+    contarTexto();
+  }
   formulario.noValidate = true;
   for (const campo of formulario.querySelectorAll("input, select, textarea")) {
     campo.id = "adhesion-" + campo.name;
@@ -259,8 +278,8 @@ function validarEntradaAdhesion(entrada) {
   formulario.elements.provincia.readOnly = true;
   domicilio.addEventListener("change", mostrarDomicilio);
   formulario.elements.codigoPostal.addEventListener("input", actualizarProvincia);
-  formulario.addEventListener("input", () => { contarTexto(); if (revisado) comprobar(); });
-  formulario.addEventListener("change", () => { if (revisado) comprobar(); });
+  formulario.addEventListener("input", evento => { if (evento.target.name === "texto") motivoEditado = true; actualizarPresentacion(); if (revisado) comprobar(); });
+  formulario.addEventListener("change", () => { actualizarPresentacion(); if (revisado) comprobar(); });
   formulario.addEventListener("focusout", evento => {
     const campo = evento.target;
     if (!campo.name || campo.disabled) return;
@@ -314,7 +333,7 @@ function validarEntradaAdhesion(entrada) {
         for (const valor of opciones[nombre]) selector.add(new Option(valor,valor));
         anterior.replaceWith(selector);
       }
-      resultado.textContent = ""; enviar.disabled = false;
+      actualizarPresentacion(); resultado.textContent = ""; enviar.disabled = false;
     } catch (error) { resultado.textContent = error.message; }
   }
   cargarOpciones();
