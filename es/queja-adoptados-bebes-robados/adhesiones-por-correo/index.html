@@ -12,7 +12,6 @@ extra_css:
     <p class="complaint-kicker">Defensor del Pueblo · Expediente n.º 26037767</p>
     <h1>Adhesiones por correo</h1>
     <p class="complaint-lead">Rellena el formulario para preparar tu adhesión. El envío incluye el formulario oficial, la queja original y tu texto de adhesión.</p>
-    <p class="resource-note"><strong>En pruebas.</strong> Usa únicamente datos ficticios y un buzón autorizado para la comprobación.</p>
   </header>
   <p>Antes de adherirte, puedes <a href="/docs/queja-adhesion-adoptados-bebes-robados.pdf" target="_blank" rel="noopener">leer la queja original (PDF)</a>, que se adjuntará al correo.</p>
   <form id="formulario-adhesion" data-endpoint="https://adhesionesmail.vercel.app/api/adhesiones_mail" method="post">
@@ -91,7 +90,6 @@ Por estas razones, solicito que el Defensor del Pueblo examine las cuestiones y 
     <label class="adhesion-confirmacion"><input type="checkbox" name="veracidad" required> Declaro que los datos consignados son veraces y se corresponden con mi identidad y señas de contacto.</label>
     <div class="adhesion-privacidad">
       <p>Tus datos se utilizarán únicamente para cumplimentar los documentos y efectuar ese envío. Este portal no los utiliza para otros fines ni mantiene un archivo propio de las adhesiones. El proceso utiliza los servicios de <a href="https://vercel.com/legal/dpa" target="_blank" rel="noopener">Vercel</a> y <a href="https://resend.com/security/gdpr/" target="_blank" rel="noopener">Resend</a>; los enlaces explican cómo tratan y conservan los datos. <a href="https://www.defensordelpueblo.es/wp-content/uploads/queja/FormularioQuejasOffline.pdf#page=3" target="_blank" rel="noopener">Consulta aquí la cláusula de protección de datos del Defensor del Pueblo (página 3 del PDF oficial)</a>.</p>
-      <p><strong>En pruebas:</strong> los mensajes se envían a los buzones de comprobación autorizados, no al Defensor del Pueblo.</p>
     </div>
     <button class="cta cta-campaign" type="submit" disabled>Enviar adhesión</button>
     <p id="resultado-adhesion" role="status" aria-live="polite"></p>
