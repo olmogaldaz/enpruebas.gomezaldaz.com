@@ -565,5 +565,5 @@ Los documentos anonimizados deben contener una eliminación real de los datos pe
 - Inglés: `/en/complaint-adoptees-stolen-babies/join-by-email/`.
 - Ambas páginas de la queja ofrecen envío automático y presentación directa.
 - La versión inglesa traduce las etiquetas, el texto de adhesión, la identificación, los mensajes y los errores del servicio. Mantiene los nombres y valores de los campos requeridos por el PDF oficial; el formulario oficial y la queja original siguen en español.
-- Ambas versiones del formulario conservan `noindex: true`. Sus rutas y fechas están en `noindex_html` de `_data/resources.yml`, que el layout consulta para los enlaces de idioma y que el sitemap no enumera.
+- Ambas versiones del formulario permiten indexación en producción. Sus rutas y fechas están en `html` de `_data/resources.yml`, que alimenta los enlaces de idioma y el sitemap. En pruebas, `indexable: false` mantiene el `noindex` general del entorno.
 - El servicio compartido de Vercel y su destinatario de pruebas no se modifican en esta traducción. Antes de producción hay que ajustar el origen permitido, la URL del PDF y el destinatario, retirar los avisos de pruebas y comprobar el recorrido.
