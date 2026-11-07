@@ -23,7 +23,7 @@ extra_css:
         <label>Nombre *<input name="nombre" type="text" maxlength="100" required></label>
         <label>Primer apellido *<input name="apellido1" type="text" maxlength="100" required></label>
         <label>Segundo apellido<input name="apellido2" type="text" maxlength="100"></label>
-        <label>Tipo de documento *<select name="tipoDocumento" required><option value="">Selecciona</option><option value="NIF">NIF</option><option value="NIE">NIE</option><option value="Pasaporte">Pasaporte</option><option value="CIF">CIF</option></select></label>
+        <label>Tipo de documento *<select name="tipoDocumento" required><option value="">Selecciona</option><option value="NIF">DNI/NIF</option><option value="NIE">NIE</option><option value="Pasaporte">Pasaporte</option><option value="CIF">CIF</option></select></label>
         <label>Número de documento *<input name="documento" type="text" maxlength="40" required></label>
       </div>
     </fieldset>
@@ -158,7 +158,7 @@ function validarEntradaAdhesion(entrada) {
       errores[nombre] = "Hay un carácter que no admite la fuente del PDF. Revisa símbolos o emoticonos.";
     } else if (nombre !== "texto" && /[\r\n\t]/.test(valor)) errores[nombre] = "Introduce este dato en una sola línea.";
   }
-  const opciones = {tratamiento:["Sr","Sra"], tipoDocumento:["DNI o NIF","NIE","Pasaporte","CIF"], domicilio:["espana","extranjero"]};
+  const opciones = {tratamiento:["Sr","Sra"], tipoDocumento:["NIF","NIE","Pasaporte","CIF"], domicilio:["espana","extranjero"]};
   for (const [nombre, lista] of Object.entries(opciones)) {
     if (valores[nombre] && !lista.includes(valores[nombre])) errores[nombre] = "Selecciona una opción válida.";
   }
@@ -185,7 +185,7 @@ function validarEntradaAdhesion(entrada) {
       valores.documento = documento;
       const formato = tipo === "NIF" ? /^\d{8}[A-Z]$/ : /^[XYZ]\d{7}[A-Z]$/;
       if (!formato.test(documento)) errores.documento = tipo === "NIF"
-        ? "Introduce un NIF de ocho cifras y una letra." : "Introduce un NIE con X, Y o Z, siete cifras y una letra.";
+        ? "Introduce un DNI/NIF de ocho cifras y una letra." : "Introduce un NIE con X, Y o Z, siete cifras y una letra.";
       else {
         const numero = tipo === "NIE" ? "XYZ".indexOf(documento[0]) + documento.slice(1,-1) : documento.slice(0,-1);
         if ("TRWAGMYFPDXBNJZSQVHLCKE"[Number(numero) % 23] !== documento.slice(-1)) {
@@ -363,7 +363,7 @@ function validarEntradaAdhesion(entrada) {
         selector.setAttribute("aria-describedby", "error-" + nombre);
         selector.required = true; selector.disabled = anterior.disabled;
         selector.add(new Option("Selecciona",""));
-        for (const valor of opciones[nombre]) selector.add(new Option(valor,valor));
+        for (const valor of opciones[nombre]) selector.add(new Option(nombre === "tipoDocumento" && valor === "NIF" ? "DNI/NIF" : valor, valor));
         anterior.replaceWith(selector);
       }
       actualizarPresentacion(); resultado.textContent = ""; enviar.disabled = false;
