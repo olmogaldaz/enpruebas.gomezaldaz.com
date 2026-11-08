@@ -59,6 +59,9 @@
   background:var(--campaign);
   border-color:var(--campaign);
   font-weight:650;
+  font-size:1.1rem;
+  line-height:1.4;
+  padding:16px 24px;
 }
 
 .cta-campaign:hover{
