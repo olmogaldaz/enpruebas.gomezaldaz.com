@@ -3,7 +3,7 @@ layout: null
 ---
 
 User-agent: *
-Disallow: /
+Allow: /
 
 {% if site.indexable %}
 Sitemap: {{ site.public_url | default: site.url }}/sitemap.xml
